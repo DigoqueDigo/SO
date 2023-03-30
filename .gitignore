@@ -52,11 +52,12 @@ Mkfile.old
 dkms.conf
 
 # FIFOS
-
 totracer
 tomonitor
 
 # EXEC
-
 tracer
 monitor
+
+# TESTE
+*.txt

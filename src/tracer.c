@@ -23,7 +23,7 @@ int main(int argc, char **argv){
         switch (hashcode(argv[1])){
 
             case -1:
-                printf("invalid argument\n");
+                printf(RED "Invalid argument\n" RESET);
                 fflush(stdout);
                 return 1;
 
@@ -31,35 +31,21 @@ int main(int argc, char **argv){
 
                 if (argc < 4){
 
-                    printf("missing argument\n");
+                    printf(RED "Missing argument\n" RESET);
                     fflush(stdout);
                     return 1;
                 }
 
-                switch (argv[2][1]){
+                if (argv[2][1] == 'u' || argv[2][1] == 'p'){
+                    
+                    execute_pipeline(command,argv[3],fifo);
+                }
 
-                    case 'u':
-
-                        execute_command(command,argv[3],fifo);
-
-
-                        break;
-
-
-                    case 'p':
-
-                        break;
-
-
-
-
-
-
-                    default:
-
-                        printf("invalid flag\n");
-                        fflush(stdout);
-                        return 1;
+                else{
+                        
+                    printf(RED "Invalid flag\n" RESET);
+                    fflush(stdout);
+                    return 1;
                 }
 
                 break;
@@ -82,9 +68,6 @@ int main(int argc, char **argv){
                 break;
         }
     }
-
-
-
 
     close(fifo[WRITE]);
     close(fifo[READ]);

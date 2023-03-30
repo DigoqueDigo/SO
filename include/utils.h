@@ -7,6 +7,7 @@
 #include <sys/stat.h>
 #include <sys/wait.h>
 #include <sys/time.h>
+#include <sys/mman.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
@@ -30,11 +31,18 @@
 #define STATS_COMMAND_HASH 3
 #define STATS_UNIQ_HASH 4
 
+#define PIPES 256
 #define LINE_SIZE 2048
-#define COMMAND_ARGUMENTS_SIZE 64
+#define COMMAND_ARGUMENTS_SIZE 512
+
+#define MAG   "\x1B[35m"
+#define RED   "\x1B[31m"
+#define RESET "\x1B[0m"
 
 int creat_fifos();
 
 int hashcode(char *argument);
+
+long long int convert_time(struct timeval *clock);
 
 #endif

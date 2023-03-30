@@ -1,0 +1,10 @@
+#ifndef PIPELINE_H
+#define PIPELINE_H
+
+#include <utils.h>
+#include <parser.h>
+
+
+int execute_pipeline(char *command[], char *line, int fifo[]);
+
+#endif

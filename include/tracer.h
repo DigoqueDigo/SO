@@ -4,6 +4,7 @@
 #include <utils.h>
 #include <parser.h>
 #include <executor.h>
+#include <pipeline.h>
 
 int main(int argc, char **argv);
 

@@ -27,3 +27,9 @@ int hashcode(char *argument){
 
     return hash;
 }
+
+
+long long int convert_time(struct timeval *clock){
+
+    return clock->tv_sec*1000 + clock->tv_usec/1000; 
+}

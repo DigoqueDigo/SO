@@ -4,7 +4,7 @@
 int main(void){
 
     int fifo[2];
-    char buffer[LINE_SIZE] = {0};
+ //   char buffer[LINE_SIZE] = {0};
     ssize_t bytes = 0;
 
     if (creat_fifos()) return 1;
