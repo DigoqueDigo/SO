@@ -3,6 +3,7 @@
 
 #include <utils.h>
 #include <parser.h>
+#include <package/package.h>
 
 
 int execute_pipeline(char *command[], char *line, int fifo[]);

@@ -4,6 +4,7 @@
 int main(void){
 
     int fifo[2];
+    PACKAGE package;
  //   char buffer[LINE_SIZE] = {0};
     ssize_t bytes = 0;
 
@@ -20,7 +21,7 @@ int main(void){
 
     int pid;
 
-    while ((bytes = read(fifo[READ],&pid,sizeof(int)))){
+    while ((bytes = read(fifo[READ],&package,sizeof(package)))){
 
     /*    if (write(STDOUT_FILENO,&pid,bytes) == -1){
 
@@ -28,7 +29,7 @@ int main(void){
             return 1;
         }*/
 
-        printf("pid: %d\n", pid);
+        print_package(package);
     }
 
 

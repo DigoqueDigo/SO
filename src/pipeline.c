@@ -3,17 +3,26 @@
 
 int execute_pipeline(char *command[], char *line, int fifo[]){
 
-    struct timeval clock;
-    long long int time_elapsed;
+    PACKAGE package;
+    char line_clone[LINE_SIZE];
     int pipeline[PIPES][2], pipe_index = 0, index = 0, start = 0, length, pid, status;
 
+    memmove(line_clone,line,strlen(line)*sizeof(char));
     length = parse_command(command,line);
-
-    gettimeofday(&clock,NULL);
-    time_elapsed = convert_time(&clock);
 
     printf(MAG "Running PID %d\n" RESET, getpid());
     fflush(stdout);
+
+    package = creat_package(EXECUTE_HASH,getpid(),"");
+    set_package_buffer(&package,line_clone);
+
+    print_package(package);
+
+    if (write(fifo[WRITE],&package,sizeof(package)) == -1){
+
+        perror("write");
+        _exit(1);
+    }
 
     for (char *token = command[index]; token != NULL; token = command[++index]){
 
@@ -84,16 +93,16 @@ int execute_pipeline(char *command[], char *line, int fifo[]){
 
     waitpid(pid,&status,0);
 
-    gettimeofday(&clock,NULL);
-    time_elapsed = convert_time(&clock) - time_elapsed;
-
     if (!WIFEXITED(status)){
 
         perror("son bad termination");
         _exit(1);
     }
 
-    printf(MAG "Ended in %lld ms\n" RESET, time_elapsed);
+    set_package_timestamp(&package);
+    print_package(package);
+
+    printf(MAG "Ended in %lld ms\n" RESET, get_package_timestamp(&package));
     
     fflush(stdout);
     fflush_command(command,length);

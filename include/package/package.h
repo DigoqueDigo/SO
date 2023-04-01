@@ -2,6 +2,7 @@
 #define PACKAGE_H
 
 #include <utils.h>
+#include <parser.h>
 
 #define INIT_SIZE 2
 
@@ -13,7 +14,13 @@ typedef struct package{
 }PACKAGE;
 
 
-PACKAGE creat_package(int protocol, int pit, char *buffer, long long int timestamp);
+PACKAGE creat_package(int protocol, int pit, char *buffer);
+
+void set_package_buffer(PACKAGE *package, char *line);
+
+void set_package_timestamp(PACKAGE *package);
+
+long long int get_package_timestamp(PACKAGE *package);
 
 void print_package(PACKAGE package);
 

@@ -25,8 +25,7 @@ int execute_command(char *command[], char *line, int fifo[]){
             printf(MAG "Running PID: %d\n" RESET, pid);
             fflush(stdout);
 
-            gettimeofday(&clock,NULL);
-            *time_elapsed = convert_time(&clock);
+            *time_elapsed = get_time();
 
             if (write(fifo[WRITE],&pid,sizeof(int)) == -1){
 
@@ -43,7 +42,7 @@ int execute_command(char *command[], char *line, int fifo[]){
             waitpid(pid,&status,0);
 
             gettimeofday(&clock,NULL);
-            *time_elapsed = convert_time(&clock) - *time_elapsed;
+            *time_elapsed = get_time() - *time_elapsed;
 
             if (!WIFEXITED(status)){
 

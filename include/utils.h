@@ -43,6 +43,6 @@ int creat_fifos();
 
 int hashcode(char *argument);
 
-long long int convert_time(struct timeval *clock);
+long long int get_time();
 
 #endif

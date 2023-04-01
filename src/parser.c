@@ -36,6 +36,27 @@ int parse_command(char *command[], char *line){
 }
 
 
+void parse_line_to_package(char *buffer, char *line){
+
+    int ant = 1;
+
+    for (char *token = strsep(&line," "); token; token = strsep(&line," ")){
+
+        if (ant){
+
+            strcat(buffer,token);
+            ant = 0;
+        }
+
+        if (!strcmp(token,"|")){
+            
+            ant = 1;
+            strcat(buffer," | ");
+        }
+    }
+}
+
+
 void fflush_command(char *command[], int length){
 
     for (int p = 0; p < length; p++){

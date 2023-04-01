@@ -29,7 +29,10 @@ int hashcode(char *argument){
 }
 
 
-long long int convert_time(struct timeval *clock){
+long long int get_time(){
 
-    return clock->tv_sec*1000 + clock->tv_usec/1000; 
+    struct timeval clock;
+    gettimeofday(&clock,NULL);
+
+    return clock.tv_sec*1000 + clock.tv_usec/1000; 
 }
