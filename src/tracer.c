@@ -22,7 +22,7 @@ int main(int argc, char **argv){
 
                 printf(RED "Invalid argument\n" RESET);
                 fflush(stdout);
-                break;
+                _exit(1);
 
 
             case EXECUTE_HASH:
@@ -31,7 +31,7 @@ int main(int argc, char **argv){
 
                     printf(RED "Missing argument\n" RESET);
                     fflush(stdout);
-                    break;
+                    _exit(1);
                 }
 
                 if (argv[2][1] == 'u' || argv[2][1] == 'p'){

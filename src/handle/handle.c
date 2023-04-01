@@ -7,12 +7,12 @@ int handle_tracer(int protocol, int fifo[]){
     char *filename = get_filename("",getpid());
     PACKAGE package = creat_package(protocol,getpid(),"");
 
-    if (creat_fifo_pid(getpid())) return 1;
+    if (creat_fifo_pid(getpid())) _exit(1);
 
     if (write(fifo[WRITE],&package,sizeof(package)) == -1){
 
         perror("write");
-        return 1;
+        _exit(1);
     }
 
     fifo[READ] = open(filename, O_RDONLY, 0666);
@@ -20,12 +20,12 @@ int handle_tracer(int protocol, int fifo[]){
     if (fifo[READ] == -1){
 
         perror("FIFO");
-        return 1;
+        _exit(1);
     }
 
     while ((bytes = read(fifo[READ],&package,sizeof(package)))){
 
-        if (bytes != sizeof(package)) return 1;
+        if (bytes != sizeof(package)) _exit(1);
 
         switch (protocol){
 

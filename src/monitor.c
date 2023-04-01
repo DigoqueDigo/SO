@@ -23,7 +23,7 @@ int main(int argc, char **argv){
     if (fifo[READ] == -1){
 
         perror("open fifo");
-        return 1;
+        _exit(1);
     }
 
     while ((bytes = read(fifo[READ],&package,sizeof(package)))){
@@ -87,6 +87,7 @@ int main(int argc, char **argv){
                         }
 
                         free(filename);
+                        free_list(list);
 
                         close(fifo[WRITE]);
                         _exit(0);

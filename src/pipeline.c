@@ -57,7 +57,7 @@ int execute_pipeline(char *command[], char *line, int fifo[]){
                     command[index] = NULL;
 
                     execvp(command[start],command+start);
-                    perror("execss");
+                    perror("exec");
                     _exit(1);
 
                 default:
