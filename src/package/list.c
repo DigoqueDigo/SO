@@ -4,7 +4,7 @@
 LIST init_list(){
 
     LIST new = malloc(sizeof(struct list));
-    
+
     new->list = malloc(INIT_SIZE*sizeof(PACKAGE));
     new->size = INIT_SIZE;
     new->sp = 0;

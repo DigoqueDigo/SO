@@ -43,7 +43,7 @@ int main(int argc, char **argv){
                 if (index == -1) add_package(list,package);
 
                 else{
-                    
+
                     remove_package(list,index);
                     save_package(argv[1],package);
                     // debug

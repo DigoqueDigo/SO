@@ -53,7 +53,7 @@ int execute_pipeline(char *command[], char *line, int fifo[]){
 
                     dup2(pipeline[pipe_index][WRITE],STDOUT_FILENO);
                     close(pipeline[pipe_index][WRITE]);
-                    
+
                     command[index] = NULL;
 
                     execvp(command[start],command+start);
@@ -65,7 +65,7 @@ int execute_pipeline(char *command[], char *line, int fifo[]){
                     close(pipeline[pipe_index][WRITE]);
 
                     if (pipe_index) close(pipeline[pipe_index-1][READ]);
-                    
+
                     pipe_index++;
                     start = index+1;
             }
@@ -73,7 +73,7 @@ int execute_pipeline(char *command[], char *line, int fifo[]){
     }
 
     if (pipe_index){
-        
+
         dup2(pipeline[pipe_index-1][READ],STDIN_FILENO);
         close(pipeline[pipe_index-1][READ]);
     }
@@ -108,7 +108,7 @@ int execute_pipeline(char *command[], char *line, int fifo[]){
         perror("write");
         _exit(1);
     }
-    
+
     fflush(stdout);
     fflush_command(command,length);
 

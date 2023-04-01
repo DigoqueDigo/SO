@@ -55,7 +55,7 @@ int handle_tracer(int protocol, int fifo[]){
     close(fifo[READ]);
 
     if (unlink(filename) == -1) perror("unlink");
-    
+
     free(filename);
 
     return 0;

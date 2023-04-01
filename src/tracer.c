@@ -35,12 +35,12 @@ int main(int argc, char **argv){
                 }
 
                 if (argv[2][1] == 'u' || argv[2][1] == 'p'){
-                    
+
                     execute_pipeline(command,argv[3],fifo);
                 }
 
                 else{
-                        
+
                     printf(RED "Invalid flag\n" RESET);
                     fflush(stdout);
                 }

@@ -49,7 +49,7 @@ void parse_line_to_package(char *buffer, char *line){
         }
 
         if (!strcmp(token,"|")){
-            
+
             ant = 1;
             strcat(buffer," | ");
         }
