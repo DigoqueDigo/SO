@@ -13,20 +13,20 @@ PIDS_FOLDER := pids
 # OBJECT CODE
 
 OBJS := $(patsubst src/%.c, $(OBJ_DIR)/%.o, $(wildcard src/*.c))
-OBJS_PACKAGE := $(patsubst src/package%.c, $(OBJS_PACKAGE_DIR)/%.o, $(wildcard src/package/*.c))
-OBJS_HANDLE := $(patsubst src/handle%.c, $(OBJS_HANDLE_DIR)/%.o, $(wildcard src/handle/*.c))
+OBJS_PACKAGE := $(patsubst src/package/%.c, $(OBJS_PACKAGE_DIR)/%.o, $(wildcard src/package/*.c))
+OBJS_HANDLE := $(patsubst src/handle/%.c, $(OBJS_HANDLE_DIR)/%.o, $(wildcard src/handle/*.c))
 ALL_OBJS := $(OBJS) $(OBJS_PACKAGE) $(OBJS_HANDLE)
 
 # TERMINAL MESSAGES
 
-DELETING_COLOR = \033[0;31m
-DELETING_STRING = "[DELETING...]"
+DELETING_COLOR := \033[0;31m
+DELETING_STRING := "[DELETING...]"
 
-COMPILING_COLOR = \033[0;33m
-COMPILING_STRING = "[COMPILING]"
+COMPILING_COLOR := \033[0;33m
+COMPILING_STRING := "[COMPILING]"
 
-OK_COLOR = \033[0;32m
-OK_STRING = "[OK]"
+OK_COLOR := \033[0;32m
+OK_STRING := "[OK]"
 
 # TARGET
 
