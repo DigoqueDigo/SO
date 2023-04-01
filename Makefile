@@ -6,10 +6,13 @@ CFLAGS := -Wall -Wextra -pedantic-errors -O2 -Iinclude
 # DIRECTORIES
 
 OBJ_DIR := build
+OBJS_PACKAGE_DIR := build/package
 
 # OBJECT CODE
 
 OBJS := $(patsubst src/%.c, $(OBJ_DIR)/%.o, $(wildcard src/*.c))
+OBJS_PACKAGE := $(patsubst src/package%.c, $(OBJS_PACKAGE_DIR)/%.o, $(wildcard src/package/*.c))
+ALL_OBJS := $(OBJS) $(OBJS_PACKAGE)
 
 # TERMINAL MESSAGES
 
@@ -34,17 +37,23 @@ all: $(TARGET_MONITOR) $(TARGET_TRACER)
 
 # LINKING
 
-$(TARGET_MONITOR): $(filter-out $(OBJ_DIR)/tracer.o, $(OBJS))
+$(TARGET_MONITOR): $(filter-out $(OBJ_DIR)/tracer.o, $(ALL_OBJS))
 	@$(CC) -o $@ $^
 
 
-$(TARGET_TRACER): $(filter-out $(OBJ_DIR)/monitor.o, $(OBJS))
+$(TARGET_TRACER): $(filter-out $(OBJ_DIR)/monitor.o, $(ALL_OBJS))
 	@$(CC) -o $@ $^
 
 # COMPILING
 
 $(OBJS): $(OBJ_DIR)/%.o : src/%.c
 	@mkdir -p $(OBJ_DIR)
+	@printf "$(COMPILING_COLOR)$(COMPILING_STRING) $@\n"
+	@$(CC) $(CFLAGS) -c $< -o $@
+
+
+$(OBJS_PACKAGE): $(OBJS_PACKAGE_DIR)/%.o : src/package/%.c
+	@mkdir -p $(OBJS_PACKAGE_DIR)
 	@printf "$(COMPILING_COLOR)$(COMPILING_STRING) $@\n"
 	@$(CC) $(CFLAGS) -c $< -o $@
 
