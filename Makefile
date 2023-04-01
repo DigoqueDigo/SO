@@ -7,6 +7,7 @@ CFLAGS := -Wall -Wextra -pedantic-errors -O2 -Iinclude
 
 OBJ_DIR := build
 OBJS_PACKAGE_DIR := build/package
+PIDS_FOLDER := pids
 
 # OBJECT CODE
 
@@ -34,6 +35,7 @@ TARGET_TRACER := tracer
 
 all: $(TARGET_MONITOR) $(TARGET_TRACER)
 	@printf "$(OK_COLOR)$(OK_STRING)\n"
+	@mkdir -p $(PIDS_FOLDER)
 
 # LINKING
 
@@ -61,5 +63,5 @@ $(OBJS_PACKAGE): $(OBJS_PACKAGE_DIR)/%.o : src/package/%.c
 
 clean:
 	@printf "$(DELETING_COLOR)$(DELETING_STRING)\n"
-	@rm -rf $(OBJ_DIR) $(TARGET_MONITOR) $(TARGET_TRACER)
+	@rm -rf $(OBJ_DIR) $(PIDS_FOLDER) $(TARGET_MONITOR) $(TARGET_TRACER)
 	@printf "$(OK_COLOR)$(OK_STRING)\n"

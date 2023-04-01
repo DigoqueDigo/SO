@@ -103,6 +103,12 @@ int execute_pipeline(char *command[], char *line, int fifo[]){
     print_package(package);
 
     printf(MAG "Ended in %lld ms\n" RESET, get_package_timestamp(&package));
+
+    if (write(fifo[WRITE],&package,sizeof(package)) == -1){
+
+        perror("write");
+        _exit(1);
+    }
     
     fflush(stdout);
     fflush_command(command,length);

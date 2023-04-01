@@ -26,6 +26,18 @@ void set_package_timestamp(PACKAGE *package){
 }
 
 
+int get_package_protocol(PACKAGE package){
+
+    return package.protocol;
+}
+
+
+int get_package_pid(PACKAGE package){
+
+    return package.pid;
+}
+
+
 long long int get_package_timestamp(PACKAGE *package){
 
     return package->timestamp;

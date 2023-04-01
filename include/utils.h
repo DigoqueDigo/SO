@@ -33,6 +33,7 @@
 
 #define PIPES 256
 #define LINE_SIZE 2048
+#define FILENAME_SIZE 128
 #define COMMAND_ARGUMENTS_SIZE 512
 
 #define MAG   "\x1B[35m"
@@ -44,5 +45,7 @@ int creat_fifos();
 int hashcode(char *argument);
 
 long long int get_time();
+
+void get_filename(char *path, int pid);
 
 #endif

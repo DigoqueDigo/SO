@@ -61,3 +61,6 @@ monitor
 
 # TESTE
 *.txt
+
+# PIDS
+pids/

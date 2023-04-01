@@ -16,7 +16,7 @@ void add_package(LIST list, PACKAGE package);
 
 void remove_package(LIST list, int index);
 
-int getindex_pid(LIST list, int pid);
+int get_index_pid(LIST list, int pid);
 
 void print_list(LIST list);
 

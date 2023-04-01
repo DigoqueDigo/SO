@@ -36,3 +36,12 @@ long long int get_time(){
 
     return clock.tv_sec*1000 + clock.tv_usec/1000; 
 }
+
+
+void get_filename(char *path, int pid){
+
+    char buffer[FILENAME_SIZE] = {0};
+
+    snprintf(buffer,FILENAME_SIZE,"%d",pid);
+    strcat(path,buffer);
+}

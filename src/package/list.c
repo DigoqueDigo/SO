@@ -16,7 +16,7 @@ LIST init_list(){
 void add_package(LIST list, PACKAGE package){
 
     if (list->sp >= list->size){
-        printf("realocc\n");
+
         list->size *= 2;
         list->list = realloc(list->list,list->size*sizeof(PACKAGE));
     }
@@ -39,7 +39,7 @@ void remove_package(LIST list, int index){
 }
 
 
-int getindex_pid(LIST list, int pid){
+int get_index_pid(LIST list, int pid){
 
     for (int p = 0; p < list->sp; p++){
 

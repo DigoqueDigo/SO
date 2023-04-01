@@ -1,14 +1,22 @@
 #include <monitor.h>
 
 
-int main(void){
+int main(int argc, char **argv){
 
-    int fifo[2];
+    if (argc != 2){
+
+        printf(RED "Invalid arguments\n" RESET);
+        fflush(stdout);
+        _exit(1);
+    }
+
     PACKAGE package;
- //   char buffer[LINE_SIZE] = {0};
     ssize_t bytes = 0;
+    int fifo[2], pid, index;
 
-    if (creat_fifos()) return 1;
+    LIST list = init_list();
+
+    if (creat_fifos()) _exit(1);
 
     fifo[READ] = open(TO_MONITOR, O_RDONLY, 0666);
     fifo[WRITE] = open(TO_TRACER, O_WRONLY, 0666);
@@ -19,19 +27,35 @@ int main(void){
         return 1;
     }
 
-    int pid;
-
     while ((bytes = read(fifo[READ],&package,sizeof(package)))){
 
-    /*    if (write(STDOUT_FILENO,&pid,bytes) == -1){
+        switch (get_package_protocol(package)){
 
-            perror("write");
-            return 1;
-        }*/
+            case EXECUTE_HASH:
 
-        print_package(package);
+                pid = get_package_pid(package);
+                index = get_index_pid(list,pid);
+
+                if (index == -1) add_package(list,package);
+
+                else{
+
+                    remove_package(list,pid);
+                    save_package(argv[1],package);
+                    show_package(argv[1],pid);
+                }
+
+                break;
+
+            default:
+
+                printf(RED "Unknow protocol" RESET);
+                fflush(stdout);
+                break;
+        }
     }
 
+    free_list(list);
 
     close(fifo[READ]);
     close(fifo[WRITE]);
