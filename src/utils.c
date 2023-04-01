@@ -1,14 +1,28 @@
 #include <utils.h>
 
-int creat_fifos(){
 
-    if (mkfifo(TO_MONITOR,0666) || mkfifo(TO_TRACER,0666)){
+int creat_fifo(){
 
-        if (errno != EEXIST){
+    if (mkfifo(TO_MONITOR,0666) && errno != EEXIST){
 
-            perror("make fifos");
-            return 1;
-        }
+        perror("creat FIFO tomonitor");
+        return 1;
+    }
+
+    return 0;
+}
+
+
+int creat_fifo_pid(int pid){
+
+    char buffer[FILENAME_SIZE];
+
+    snprintf(buffer,FILENAME_SIZE,"%d",pid);
+
+    if (mkfifo(buffer,0666)){
+
+        perror("creat FIFO do tracer");
+        return 1;
     }
 
     return 0;
@@ -38,10 +52,15 @@ long long int get_time(){
 }
 
 
-void get_filename(char *path, int pid){
+char* get_filename(char *path, int pid){
 
-    char buffer[FILENAME_SIZE] = {0};
+    char buffer[FILENAME_SIZE];
+    char *filename = malloc(FILENAME_SIZE);
 
     snprintf(buffer,FILENAME_SIZE,"%d",pid);
-    strcat(path,buffer);
+
+    strcat(filename,path);
+    strcat(filename,buffer);
+
+    return filename;
 }

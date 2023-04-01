@@ -38,9 +38,9 @@ int get_package_pid(PACKAGE package){
 }
 
 
-long long int get_package_timestamp(PACKAGE *package){
+long long int get_package_timestamp(PACKAGE package){
 
-    return package->timestamp;
+    return package.timestamp;
 }
 
 

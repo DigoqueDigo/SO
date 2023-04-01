@@ -13,7 +13,6 @@
 #include <stdio.h>
 #include <errno.h>
 
-#define TO_TRACER "totracer"
 #define TO_MONITOR "tomonitor"
 
 #define READ 0
@@ -40,12 +39,14 @@
 #define RED   "\x1B[31m"
 #define RESET "\x1B[0m"
 
-int creat_fifos();
+int creat_fifo();
+
+int creat_fifo_pid(int pid);
 
 int hashcode(char *argument);
 
 long long int get_time();
 
-void get_filename(char *path, int pid);
+char* get_filename(char *path, int pid);
 
 #endif

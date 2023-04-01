@@ -24,7 +24,7 @@ int get_package_protocol(PACKAGE package);
 
 int get_package_pid(PACKAGE package);
 
-long long int get_package_timestamp(PACKAGE *package);
+long long int get_package_timestamp(PACKAGE package);
 
 void print_package(PACKAGE package);
 

@@ -39,6 +39,18 @@ void remove_package(LIST list, int index){
 }
 
 
+int get_list_size(LIST list){
+
+    return list->sp;
+}
+
+
+PACKAGE get_pakage(LIST list, int index){
+
+    return list->list[index];
+}
+
+
 int get_index_pid(LIST list, int pid){
 
     for (int p = 0; p < list->sp; p++){

@@ -42,7 +42,6 @@ int execute_pipeline(char *command[], char *line, int fifo[]){
 
                 case 0:
 
-                    close(fifo[READ]);
                     close(fifo[WRITE]);
                     close(pipeline[pipe_index][READ]);
 
@@ -102,7 +101,7 @@ int execute_pipeline(char *command[], char *line, int fifo[]){
     set_package_timestamp(&package);
     print_package(package);
 
-    printf(MAG "Ended in %lld ms\n" RESET, get_package_timestamp(&package));
+    printf(MAG "Ended in %lld ms\n" RESET, get_package_timestamp(package));
 
     if (write(fifo[WRITE],&package,sizeof(package)) == -1){
 
