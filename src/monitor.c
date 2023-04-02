@@ -30,11 +30,6 @@ int main(int argc, char **argv){
 
         switch (get_package_protocol(package)){
 
-            case -1:
-
-                perror("protocol");
-                break;
-
             case EXECUTE_HASH:
 
                 pid = get_package_pid(package);
@@ -70,52 +65,35 @@ int main(int argc, char **argv){
 
             case STATUS_HASH:
 
-                switch (fork()){
+                if ((pid = fork()) == -1){
 
-                    case -1:
-                        perror("fork");
-                        break;
+                    perror("fork");
+                    break;
+                }
+                
+                if (!pid) handle_status(list,package,fifo);
 
-                    case 0:{
+                break;
 
-                        close(fifo[READ]);
-                        char *filename = get_filename("",get_package_pid(package));
+            case STATS_TIME_HASH:
 
-                        fifo[WRITE] = open(filename, O_WRONLY, 0666);
+                if ((pid = fork()) == -1){
 
-                        if (fifo[WRITE] == -1){
-
-                            perror("open FIFO");
-                            break;
-                        }
-
-                        for (int p = 0; p < get_list_size(list); p++){
-
-                            package = get_pakage(list,p);
-                            set_package_timestamp(&package);
-
-                            if (write(fifo[WRITE],&package,sizeof(package)) == -1){
-
-                                perror("write");
-                                _exit(1);
-                            }
-                        }
-
-                        free(filename);
-                        free_list(list);
-
-                        close(fifo[WRITE]);
-                        _exit(0);
-                    }
+                    perror("fork");
+                    break;
+                }
+                
+                if (!pid){
+                    
+                    free_list(list);
+                    handle_statstime(package,argv[1],fifo);
                 }
 
                 break;
 
 
             default:
-
-                printf(RED "Unknow protocol" RESET);
-                fflush(stdout);
+                perror("Not implemented");
                 break;
         }
     }

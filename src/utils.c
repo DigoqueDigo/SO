@@ -65,3 +65,14 @@ char* get_filename(char *path, int pid){
 
     return filename;
 }
+
+
+int get_pids_buffer(int *pids, char **argv, int start, int end){
+
+    for (int p = 0; p < end-start; p++){
+
+        pids[p] = atoi(argv[start+p]);
+    }
+
+    return end - start;
+}

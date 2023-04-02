@@ -4,6 +4,6 @@
 #include <utils.h>
 #include <package/package.h>
 
-int handle_tracer(int protocol, int fifo[]);
+int handle_tracer(int argc, char **argv, int protocol, int fifo[]);
 
 #endif

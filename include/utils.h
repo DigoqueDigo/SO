@@ -30,8 +30,10 @@
 #define STATS_COMMAND_HASH 3
 #define STATS_UNIQ_HASH 4
 
+#define BUCKET 1
 #define PIPES 256
 #define LINE_SIZE 2048
+#define PIDS_SIZE 512
 #define FILENAME_SIZE 128
 #define COMMAND_ARGUMENTS_SIZE 512
 
@@ -48,5 +50,7 @@ int hashcode(char *argument);
 long long int get_time();
 
 char* get_filename(char *path, int pid);
+
+int get_pids_buffer(int *pids, char **argv, int start, int end);
 
 #endif

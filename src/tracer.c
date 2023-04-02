@@ -4,7 +4,7 @@
 int main(int argc, char **argv){
 
     int fifo[2];
-    
+
     fifo[WRITE] = open(TO_MONITOR, O_WRONLY, 0666);
 
     if (fifo[WRITE] == -1){
@@ -49,7 +49,7 @@ int main(int argc, char **argv){
 
             default:
 
-                handle_tracer(hashcode(argv[1]),fifo);
+                handle_tracer(argc,argv,hashcode(argv[1]),fifo);
                 break;
         }
     }
