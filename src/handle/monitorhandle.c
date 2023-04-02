@@ -4,9 +4,11 @@
 void handle_monitor(PACKAGE package, char *path, int fifo[]){
 
     PACKAGE result;
-    int pipes[PIPES][2], index = 0, fd;
     long long int acc = 0, total = 0;
-    char *filename = get_filename("",get_package_pid(package));
+    int pipes[PIPES][2], index = 0, fd;
+    char buffer[LINE_SIZE] = {0}, *filename;
+
+    filename = get_filename("",get_package_pid(package));
 
     fifo[WRITE] = open(filename, O_WRONLY, 0666);
 
@@ -50,28 +52,40 @@ void handle_monitor(PACKAGE package, char *path, int fifo[]){
                         _exit(1);
                     }
 
-                    if (read(fd,&result,sizeof(package)) != sizeof(package)){
+                    if (read(fd,&result,sizeof(PACKAGE)) != sizeof(PACKAGE)){
 
                         free(filename);
                         perror("read");
                         _exit(1);
                     }
 
-                    if (get_package_protocol(package) == STATS_TIME_HASH){
-                        
-                        acc += get_package_timestamp(result);
+                    switch (get_package_protocol(package)){
+
+                        case STATS_TIME_HASH:
+                            acc += get_package_timestamp(result);
+                            break;
+
+                        case STATS_COMMAND_HASH:
+                            acc += count_occurrence(result.buffer,package.buffer);
+                            break;
+
+                        case STATS_UNIQ_HASH:
+
+                            buffer[0] = '\0';
+
+                            if (!strstr(result.buffer,"|")) strcpy(buffer,result.buffer);
+
+                            break;
                     }
 
-                    else if (get_package_protocol(package) == STATS_COMMAND_HASH){
-                        
-                        acc += count_occurrence(result.buffer,package.buffer);
-                    }
-                    
                     free(filename);
                     close(fd);
                 }
 
-                if (write(pipes[index][WRITE],&acc,sizeof(long long int)) == -1){
+                result = creat_package(get_package_protocol(package),0,buffer);
+                set_package_timestamp_force(&result,acc);
+
+                if (write(pipes[index][WRITE],&result,sizeof(PACKAGE)) == -1){
 
                     free(filename);
                     perror("write");
@@ -90,21 +104,29 @@ void handle_monitor(PACKAGE package, char *path, int fifo[]){
 
     for (int p = 0; p < index; p++){
 
-        if (read(pipes[p][READ],&acc,sizeof(long long int)) != sizeof(long long int)){
+        if (read(pipes[p][READ],&result,sizeof(PACKAGE)) != sizeof(PACKAGE)){
 
             perror("read");
             _exit(1);
         }
-
-        total += acc;
+        
+        total += get_package_timestamp(result);
+        
+        if (result.buffer[0]){
+            
+            strcat(buffer,result.buffer);
+            strcat(buffer,"\n");
+        }
 
         close(pipes[p][READ]);
     }
 
-    result = creat_package(STATS_TIME_HASH,0,package.buffer);
+    if (get_package_protocol(package) == STATS_COMMAND_HASH) strcpy(buffer,package.buffer);
+
+    result = creat_package(get_package_protocol(package),0,buffer);
     set_package_timestamp_force(&result,total);
 
-    if (write(fifo[WRITE],&result,sizeof(package)) == -1){
+    if (write(fifo[WRITE],&result,sizeof(PACKAGE)) == -1){
 
         perror("write");
         _exit(1);

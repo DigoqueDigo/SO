@@ -26,7 +26,7 @@ int main(int argc, char **argv){
         _exit(1);
     }
 
-    while ((bytes = read(fifo[READ],&package,sizeof(package)))){
+    while ((bytes = read(fifo[READ],&package,sizeof(PACKAGE)))){
 
         switch (get_package_protocol(package)){
 
@@ -50,10 +50,10 @@ int main(int argc, char **argv){
                         case 0:
 
                             close(fifo[READ]);
-                        
+
                             save_package(argv[1],package);
                             free_list(list);
-                        
+
                             _exit(0);
                     }
                     // debug
@@ -70,9 +70,9 @@ int main(int argc, char **argv){
                     perror("fork");
                     break;
                 }
-                
+
                 if (!pid){
-                    
+
                     close(fifo[READ]);
                     handle_status(list,package,fifo);
                 }
@@ -80,6 +80,7 @@ int main(int argc, char **argv){
                 break;
 
             case STATS_TIME_HASH:
+            case STATS_UNIQ_HASH:
             case STATS_COMMAND_HASH:
 
                 if ((pid = fork()) == -1){
@@ -87,7 +88,7 @@ int main(int argc, char **argv){
                     perror("fork");
                     break;
                 }
-                
+
                 if (!pid){
 
                     free_list(list);
@@ -99,7 +100,9 @@ int main(int argc, char **argv){
 
 
             default:
-                perror("Not implemented");
+
+                printf(RED "Cant identify protocol\n" RESET);
+                fflush(stdout);
                 break;
         }
     }

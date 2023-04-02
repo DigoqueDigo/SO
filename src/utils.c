@@ -48,7 +48,7 @@ long long int get_time(){
     struct timeval clock;
     gettimeofday(&clock,NULL);
 
-    return clock.tv_sec*1000 + clock.tv_usec/1000; 
+    return clock.tv_sec*1000 + clock.tv_usec/1000;
 }
 
 

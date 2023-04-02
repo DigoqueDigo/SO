@@ -14,7 +14,7 @@ void save_package(char *path, PACKAGE package){
         _exit(1);
     }
 
-    if (write(fd,&package,sizeof(package)) == -1){
+    if (write(fd,&package,sizeof(PACKAGE)) == -1){
 
         perror("write");
          _exit(1);
@@ -36,9 +36,9 @@ void show_package(char *path, int pid){
 
     if (fd == -1) _exit(1);
 
-    bytes = read(fd,&package,sizeof(package));
+    bytes = read(fd,&package,sizeof(PACKAGE));
 
-    if (bytes != sizeof(package)){
+    if (bytes != sizeof(PACKAGE)){
 
         perror("read");
         _exit(1);

@@ -18,7 +18,7 @@ void handle_status(LIST list, PACKAGE package, int fifo[]){
         package = get_pakage(list,p);
         set_package_timestamp(&package);
 
-        if (write(fifo[WRITE],&package,sizeof(package)) == -1){
+        if (write(fifo[WRITE],&package,sizeof(PACKAGE)) == -1){
 
             perror("write");
             _exit(1);

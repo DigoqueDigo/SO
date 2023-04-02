@@ -24,7 +24,7 @@ int handle_tracer(int argc, char** argv, int protocol, int fifo[]){
 
     if (creat_fifo_pid(getpid())) _exit(1);
 
-    if (write(fifo[WRITE],&package,sizeof(package)) == -1){
+    if (write(fifo[WRITE],&package,sizeof(PACKAGE)) == -1){
 
         perror("write");
         _exit(1);
@@ -38,9 +38,9 @@ int handle_tracer(int argc, char** argv, int protocol, int fifo[]){
         _exit(1);
     }
 
-    while ((bytes = read(fifo[READ],&package,sizeof(package)))){
+    while ((bytes = read(fifo[READ],&package,sizeof(PACKAGE)))){
 
-        if (bytes != sizeof(package)) _exit(1);
+        if (bytes != sizeof(PACKAGE)) _exit(1);
 
         switch (protocol){
 
@@ -54,14 +54,14 @@ int handle_tracer(int argc, char** argv, int protocol, int fifo[]){
                 break;
 
             case STATS_TIME_HASH:
-                
+
                 printf("Total execution time is %lld ms\n",
                         get_package_timestamp(package));
 
                 break;
 
             case STATS_COMMAND_HASH:
-                
+
                 printf("%s was executed %lld times\n",
                         package.buffer,
                         get_package_timestamp(package));
@@ -69,7 +69,8 @@ int handle_tracer(int argc, char** argv, int protocol, int fifo[]){
                 break;
 
             case STATS_UNIQ_HASH:
-                perror("not implemented");
+
+                printf("%s", package.buffer);
                 break;
         }
 

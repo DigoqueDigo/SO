@@ -64,7 +64,7 @@ int get_package_pids_buffer_size(PACKAGE package){
 
 int get_package_pids_buffer_pid(PACKAGE package, int index){
 
-    if (index > 0 && index < PIDS_SIZE) return package.pids_buffer[index];
+    if (index >= 0 && index < PIDS_SIZE) return package.pids_buffer[index];
 
     return -1;
 }

@@ -19,7 +19,7 @@ int execute_pipeline(char *line, int fifo[]){
 
     print_package(package);
 
-    if (write(fifo[WRITE],&package,sizeof(package)) == -1){
+    if (write(fifo[WRITE],&package,sizeof(PACKAGE)) == -1){
 
         perror("write");
         _exit(1);
@@ -104,7 +104,7 @@ int execute_pipeline(char *line, int fifo[]){
 
     printf(MAG "Ended in %lld ms\n" RESET, get_package_timestamp(package));
 
-    if (write(fifo[WRITE],&package,sizeof(package)) == -1){
+    if (write(fifo[WRITE],&package,sizeof(PACKAGE)) == -1){
 
         perror("write");
         _exit(1);
