@@ -53,4 +53,6 @@ char* get_filename(char *path, int pid);
 
 int get_pids_buffer(int *pids, char **argv, int start, int end);
 
+int count_occurrence(char *buffer, char *key);
+
 #endif

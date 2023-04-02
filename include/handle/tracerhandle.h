@@ -1,5 +1,5 @@
-#ifndef HANDLE_H
-#define HANDLE_H
+#ifndef TRACERHANDLE_H
+#define TRACERHANDLE_H
 
 #include <utils.h>
 #include <package/package.h>

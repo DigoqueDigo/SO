@@ -76,3 +76,16 @@ int get_pids_buffer(int *pids, char **argv, int start, int end){
 
     return end - start;
 }
+
+
+int count_occurrence(char *buffer, char *key){
+
+    int acc = 0;
+
+    for (char *token = strstr(buffer,key); token; acc++){
+
+        token = strstr(token+1,key);
+    }
+
+    return acc;
+}

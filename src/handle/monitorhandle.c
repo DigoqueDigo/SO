@@ -1,17 +1,18 @@
-#include <handle/statstime.h>
+#include <handle/monitorhandle.h>
 
 
-void handle_statstime(PACKAGE package, char *path, int fifo[]){
+void handle_monitor(PACKAGE package, char *path, int fifo[]){
 
     PACKAGE result;
     int pipes[PIPES][2], index = 0, fd;
-    long long int acc = 0, total_time = 0;
+    long long int acc = 0, total = 0;
     char *filename = get_filename("",get_package_pid(package));
 
     fifo[WRITE] = open(filename, O_WRONLY, 0666);
 
     if (fifo[WRITE] == -1){
 
+        free(filename);
         perror("open FIFO");
         _exit(1);
     }
@@ -56,7 +57,15 @@ void handle_statstime(PACKAGE package, char *path, int fifo[]){
                         _exit(1);
                     }
 
-                    acc += get_package_timestamp(result);
+                    if (get_package_protocol(package) == STATS_TIME_HASH){
+                        
+                        acc += get_package_timestamp(result);
+                    }
+
+                    else if (get_package_protocol(package) == STATS_COMMAND_HASH){
+                        
+                        acc += count_occurrence(result.buffer,package.buffer);
+                    }
                     
                     free(filename);
                     close(fd);
@@ -64,6 +73,7 @@ void handle_statstime(PACKAGE package, char *path, int fifo[]){
 
                 if (write(pipes[index][WRITE],&acc,sizeof(long long int)) == -1){
 
+                    free(filename);
                     perror("write");
                     _exit(1);
                 }
@@ -86,13 +96,13 @@ void handle_statstime(PACKAGE package, char *path, int fifo[]){
             _exit(1);
         }
 
-        total_time += acc;
+        total += acc;
 
         close(pipes[p][READ]);
     }
 
-    result = creat_package(STATS_TIME_HASH,0,"");
-    set_package_timestamp_force(&result,total_time);
+    result = creat_package(STATS_TIME_HASH,0,package.buffer);
+    set_package_timestamp_force(&result,total);
 
     if (write(fifo[WRITE],&result,sizeof(package)) == -1){
 

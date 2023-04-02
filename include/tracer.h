@@ -4,7 +4,7 @@
 #include <utils.h>
 #include <parser.h>
 #include <pipeline.h>
-#include <handle/handle.h>
+#include <handle/tracerhandle.h>
 
 int main(int argc, char **argv);
 

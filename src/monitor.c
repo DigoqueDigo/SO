@@ -71,11 +71,16 @@ int main(int argc, char **argv){
                     break;
                 }
                 
-                if (!pid) handle_status(list,package,fifo);
+                if (!pid){
+                    
+                    close(fifo[READ]);
+                    handle_status(list,package,fifo);
+                }
 
                 break;
 
             case STATS_TIME_HASH:
+            case STATS_COMMAND_HASH:
 
                 if ((pid = fork()) == -1){
 
@@ -84,9 +89,10 @@ int main(int argc, char **argv){
                 }
                 
                 if (!pid){
-                    
+
                     free_list(list);
-                    handle_statstime(package,argv[1],fifo);
+                    close(fifo[READ]);
+                    handle_monitor(package,argv[1],fifo);
                 }
 
                 break;

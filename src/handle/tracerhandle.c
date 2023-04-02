@@ -1,4 +1,4 @@
-#include <handle/handle.h>
+#include <handle/tracerhandle.h>
 
 
 int handle_tracer(int argc, char** argv, int protocol, int fifo[]){
@@ -23,11 +23,6 @@ int handle_tracer(int argc, char** argv, int protocol, int fifo[]){
     }
 
     if (creat_fifo_pid(getpid())) _exit(1);
-
-    printf("%d %d %d %d\n", package.pids_buffer[0],
-    package.pids_buffer[1],
-    package.pids_buffer[2],
-    package.pids_buffer[3]);
 
     if (write(fifo[WRITE],&package,sizeof(package)) == -1){
 

@@ -24,7 +24,7 @@ void set_package_buffer(PACKAGE *package, char *line){
 
 void set_package_pids_buffer(PACKAGE *package, int *pids, int size){
 
-    memmove(package->pids_buffer,pids,size*sizeof(int));
+    if (size > 0) memmove(package->pids_buffer,pids,size*sizeof(int));
 }
 
 
@@ -64,7 +64,7 @@ int get_package_pids_buffer_size(PACKAGE package){
 
 int get_package_pids_buffer_pid(PACKAGE package, int index){
 
-    if (index < PIDS_SIZE) return package.pids_buffer[index];
+    if (index > 0 && index < PIDS_SIZE) return package.pids_buffer[index];
 
     return -1;
 }
