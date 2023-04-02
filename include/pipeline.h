@@ -6,6 +6,6 @@
 #include <package/package.h>
 
 
-int execute_pipeline(char *command[], char *line, int fifo[]);
+int execute_pipeline(char *line, int fifo[]);
 
 #endif

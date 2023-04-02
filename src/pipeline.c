@@ -1,13 +1,14 @@
 #include <pipeline.h>
 
 
-int execute_pipeline(char *command[], char *line, int fifo[]){
+int execute_pipeline(char *line, int fifo[]){
 
     PACKAGE package;
     char line_clone[LINE_SIZE];
+    char *command[COMMAND_ARGUMENTS_SIZE] = {0};
     int pipeline[PIPES][2], pipe_index = 0, index = 0, start = 0, length, pid, status;
 
-    memmove(line_clone,line,strlen(line)*sizeof(char));
+    memmove(line_clone,line,(strlen(line)+1)*sizeof(char));
     length = parse_command(command,line);
 
     printf(MAG "Running PID %d\n" RESET, getpid());

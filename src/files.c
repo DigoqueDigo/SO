@@ -6,32 +6,21 @@ void save_package(char *path, PACKAGE package){
     int fd;
     char *filename = get_filename(path,get_package_pid(package));
 
-    switch (fork()){
+    fd = open(filename, O_CREAT | O_RDWR, 0666);
 
-        case -1:
-            perror("fork");
-            _exit(1);
+    if (fd == -1){
 
-        case 0:
-
-            fd = open(filename, O_CREAT | O_RDWR, 0666);
-
-            if (fd == -1){
-
-                perror("open");
-                _exit(1);
-            }
-
-            if (write(fd,&package,sizeof(package)) == -1){
-
-                perror("write");
-                _exit(1);
-            }
-
-            close(fd);
-            _exit(0);
+        perror("open");
+        _exit(1);
     }
 
+    if (write(fd,&package,sizeof(package)) == -1){
+
+        perror("write");
+         _exit(1);
+    }
+
+    close(fd);
     free(filename);
 }
 

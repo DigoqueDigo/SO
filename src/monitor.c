@@ -45,7 +45,22 @@ int main(int argc, char **argv){
                 else{
 
                     remove_package(list,index);
-                    save_package(argv[1],package);
+
+                    switch (fork()){
+
+                        case -1:
+                            perror("fork");
+                            break;
+
+                        case 0:
+
+                            close(fifo[READ]);
+                        
+                            save_package(argv[1],package);
+                            free_list(list);
+                        
+                            _exit(0);
+                    }
                     // debug
                     sleep(2);
                     show_package(argv[1],pid);

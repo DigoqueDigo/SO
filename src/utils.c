@@ -59,6 +59,7 @@ char* get_filename(char *path, int pid){
 
     snprintf(buffer,FILENAME_SIZE,"%d",pid);
 
+    filename[0] = '\0';
     strcat(filename,path);
     strcat(filename,buffer);
 

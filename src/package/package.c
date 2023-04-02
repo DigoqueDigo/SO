@@ -7,6 +7,7 @@ PACKAGE creat_package(int protocol, int pid, char *buffer){
 
     new.protocol = protocol;
     new.pid = pid;
+    memset(new.buffer,0,LINE_SIZE*sizeof(char));
     strcpy(new.buffer,buffer);
     new.timestamp = get_time();
 

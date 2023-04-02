@@ -4,8 +4,7 @@
 int main(int argc, char **argv){
 
     int fifo[2];
-    char *command[COMMAND_ARGUMENTS_SIZE] = {0};
-
+    
     fifo[WRITE] = open(TO_MONITOR, O_WRONLY, 0666);
 
     if (fifo[WRITE] == -1){
@@ -36,7 +35,7 @@ int main(int argc, char **argv){
 
                 if (argv[2][1] == 'u' || argv[2][1] == 'p'){
 
-                    execute_pipeline(command,argv[3],fifo);
+                    execute_pipeline(argv[3],fifo);
                 }
 
                 else{
