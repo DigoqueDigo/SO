@@ -32,6 +32,7 @@ OK_STRING := "[OK]"
 
 TARGET_MONITOR := monitor
 TARGET_TRACER := tracer
+TARGET_ZIP := grupo-xx.zip
 
 # BUILDING
 
@@ -66,6 +67,11 @@ $(OBJS_HANDLE): $(OBJS_HANDLE_DIR)/%.o : src/handle/%.c
 	@mkdir -p $(OBJS_HANDLE_DIR)
 	@printf "$(COMPILING_COLOR)$(COMPILING_STRING) $@\n"
 	@$(CC) $(CFLAGS) -c $< -o $@
+
+# ZIP
+
+zip:
+	zip -r $(TARGET_ZIP) Makefile src/ include/ 
 
 # CLEAN
 
