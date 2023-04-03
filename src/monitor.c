@@ -12,13 +12,14 @@ int main(int argc, char **argv){
 
     PACKAGE package;
     ssize_t bytes = 0;
-    int fifo[2], pid, index;
+    int fifo[2], pid, index, cycle;
 
     LIST list = init_list();
 
     if (creat_fifo()) _exit(1);
 
     fifo[READ] = open(TO_MONITOR, O_RDONLY, 0666);
+    cycle = open(TO_MONITOR, O_WRONLY, 0666);
 
     if (fifo[READ] == -1){
 
@@ -49,6 +50,7 @@ int main(int argc, char **argv){
 
                         case 0:
 
+                            close(cycle);
                             close(fifo[READ]);
 
                             save_package(argv[1],package);
@@ -56,9 +58,6 @@ int main(int argc, char **argv){
 
                             _exit(0);
                     }
-                    // debug
-                    sleep(2);
-                    show_package(argv[1],pid);
                 }
 
                 break;
@@ -73,6 +72,7 @@ int main(int argc, char **argv){
 
                 if (!pid){
 
+                    close(cycle);
                     close(fifo[READ]);
                     handle_status(list,package,fifo);
                 }
@@ -92,12 +92,12 @@ int main(int argc, char **argv){
                 if (!pid){
 
                     free_list(list);
+                    close(cycle);
                     close(fifo[READ]);
                     handle_monitor(package,argv[1],fifo);
                 }
 
                 break;
-
 
             default:
 
@@ -108,6 +108,7 @@ int main(int argc, char **argv){
     }
 
     free_list(list);
+    close(cycle);
     close(fifo[READ]);
 
     return 0;

@@ -65,3 +65,32 @@ void fflush_command(char *command[], int length){
         command[p] = NULL;
     }
 }
+
+
+void nub(char *src, char *delim){
+
+    int p, index = 0;
+    char *src_clone = strdup(src), *temp = src_clone;
+    char *buffer[COMMAND_ARGUMENTS_SIZE] = {NULL};
+
+    for (char *token = strsep(&src_clone,delim); token; token = strsep(&src_clone,delim)){
+    
+        for (p = 0; p < index; p++){
+
+            if (!strcmp(token,buffer[p])) break;
+        }
+
+        if (p == index && *token) buffer[index++] = strdup(token);
+    }
+
+    memset(src,0,LINE_SIZE*sizeof(char));
+
+    for (p = 0; p < index; p++){
+
+        strcat(src,buffer[p]);
+        strcat(src,delim);
+    }
+
+    free(temp);
+    fflush_command(buffer,index);
+}

@@ -39,6 +39,8 @@ void handle_monitor(PACKAGE package, char *path, int fifo[]){
 
                 close(pipes[index][READ]);
 
+                buffer[0] = '\0';
+
                 for (int i = p; i < p+BUCKET && get_package_pids_buffer_pid(package,i) != -1; i++){
 
                     filename = get_filename(path,get_package_pids_buffer_pid(package,i));
@@ -71,9 +73,11 @@ void handle_monitor(PACKAGE package, char *path, int fifo[]){
 
                         case STATS_UNIQ_HASH:
 
-                            buffer[0] = '\0';
-
-                            if (!strstr(result.buffer,"|")) strcpy(buffer,result.buffer);
+                            if (!strstr(result.buffer,"|")){
+                                
+                                strcat(buffer,result.buffer);
+                                strcat(buffer,"\n");
+                            }
 
                             break;
                     }
@@ -112,14 +116,12 @@ void handle_monitor(PACKAGE package, char *path, int fifo[]){
         
         total += get_package_timestamp(result);
         
-        if (result.buffer[0]){
-            
-            strcat(buffer,result.buffer);
-            strcat(buffer,"\n");
-        }
+        if (result.buffer[0])strcat(buffer,result.buffer);
 
         close(pipes[p][READ]);
     }
+
+    nub(buffer,"\n");
 
     if (get_package_protocol(package) == STATS_COMMAND_HASH) strcpy(buffer,package.buffer);
 

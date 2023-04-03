@@ -30,7 +30,7 @@
 #define STATS_COMMAND_HASH 3
 #define STATS_UNIQ_HASH 4
 
-#define BUCKET 1
+#define BUCKET 5
 #define PIPES 256
 #define LINE_SIZE 2048
 #define PIDS_SIZE 512
