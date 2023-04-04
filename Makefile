@@ -71,7 +71,7 @@ $(OBJS_HANDLE): $(OBJS_HANDLE_DIR)/%.o : src/handle/%.c
 # ZIP
 
 zip:
-	zip -r $(TARGET_ZIP) Makefile src/ include/ 
+	zip -r $(TARGET_ZIP) Makefile src/ include/ report/ *.pdf
 
 # CLEAN
 
