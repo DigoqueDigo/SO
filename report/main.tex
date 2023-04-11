@@ -67,9 +67,9 @@
 
 \chapter{Introdução}
 
-    No âmbito da Unidade Curricular de Sistemas Operativos foi-nos apresentado um trabalho que visa a comunicação entre um servidor e vários clientes, a fim de executar programas e apresentar estatísticas sobre os mesmos.
+    No âmbito da Unidade Curricular de Sistemas Operativos foi-nos apresentado um trabalho que visava a comunicação entre um servidor e vários clientes, a fim de executar programas e apresentar estatísticas sobre os mesmos.
 
-    Ao contrário do que seria possível depreender, neste caso os clientes são responsáveis por executar os programas que invocam, ao passo que o servidor apenas funciona como um centro estático a partir do qual os clientes podem obter informações relativas aos programas que foram executados até ao momento.
+    Ao contrário do que seria possível depreender, neste caso os clientes são responsáveis por executar os programas que invocam, ao passo que o servidor apenas funciona como um centro estatístico a partir do qual os clientes podem obter informações relativas aos programas que foram executados até ao momento.
 
     Numa fase inicial, o maior desafio cifrou-se em perceber como deveria ser assegurada a comunicação entre os vários clientes e o servidor. Mais tarde, a execução encadeada de programas também se revelou um grande obstáculo, mas felizmente fomos capazes de ultrapassar essas dificuldades.
 
@@ -89,7 +89,7 @@
             \label{fig:Arq1}
         \end{figure}
 
-        Apesar de o servidor não precisar de saber necessariamente qual dos clientes está a comunicar consigo, o contrário não acontece. Por exemplo, vamos supor que dois clientes enviam uma mensagem em simultâneo ao servidor, como as mensagens são diferentes é expectável que os clientes recebem respostas diferentes.
+        Apesar de o servidor não precisar de saber necessariamente qual dos clientes está a comunicar consigo, o contrário não acontece. Por exemplo, vamos supor que dois clientes enviam uma mensagem em simultâneo ao servidor, como as mensagens são diferentes é expectável que os clientes recebam respostas diferentes.
 
         Contudo, após enviarem as mensagens, os dois clientes vão tentar ler do mesmo FIFO, e nada impede que a mensagem destinada a um cliente seja lida pelo outro e vice-versa. 
 
@@ -109,7 +109,7 @@
 
         Nesta conceção de canais separados, um cliente é responsável por criar o FIFO que mais tarde o servidor deverá utilizar para encaminhar as mensagens destinadas a esse mesmo cliente, pelo que nunca haverá qualquer interferência entre clientes.
 
-        Após o comunicação terminar, o FIFO deixa de ser necessário e como tal também cabe ao cliente assegura que o mesmo é eliminado, garantindo que os outros clientes terão espaço para criar os seus FIFOs.
+        Após o comunicação terminar, o FIFO deixa de ser necessário e como tal também cabe ao cliente assegurar que o mesmo é eliminado, garantindo que outros clientes terão espaço para criar os seus FIFOs.
 
 
     \section{Protocolo}
@@ -170,7 +170,7 @@
 
         A interação entre o cliente e o servidor realiza-se da mesma forma que numa execução única, contudo terão de ser criados tantos filhos como programas a executar dentro do \textit{pipeline}.
 
-        Como não sabemos à partida quantos \textit{pipes} serão necessários, optámos por declarar $64$, podíamos ter utilizado uma alocação dinâmica, contudo parece-nos que $64$ \textit{pipes} é um número mais que suficiente para além de não representar um grande peso para a \textit{stack}.
+        Como não sabemos à partida quantos \textit{pipes} serão necessários, optámos por declarar $64$, podíamos ter utilizado uma alocação dinâmica, contudo parece-nos que $64$ \textit{pipes} é um número mais que suficiente para além de não representar um grande peso na \textit{stack}.
 
         Para que o \textit{pipeline} funcione, os \textit{inputs} e \textit{outputs} dos programas têm de ser redirecionados devidamente, assim o STDOUT\_FILENO foi redirecionado para a ponta de escrita do \textit{pipe} atual, enquanto que o STDIN\_FILENO foi redirecionado para a ponta de leitura do \textit{pipe} anterior.
 
@@ -191,7 +191,7 @@
 
         \begin{enumerate}
             \item O cliente cria um FIFO ao qual atribui um nome que corresponde ao seu \textit{pid.}
-            \item É criado um pacote com informações de estado e enviado pelo FIFO permanente.
+            \item É criado um pacote com informações de estado e enviado pelo FIFO estático.
             \item O servidor recebe o pacote e obtém o \textit{pid} presente no mesmo.
             \item O FIFO é aberto pelo servidor que por sua vez envia uma cópia dos pacotes presentes na lista de pacotes.
             \item À medida que o cliente recebe os pacotes, imprime no \textit{standard output} parte da informação contida nos mesmos.

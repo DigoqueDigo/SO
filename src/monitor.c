@@ -21,7 +21,7 @@ int main(int argc, char **argv){
     fifo[READ] = open(TO_MONITOR, O_RDONLY, 0666);
     cycle = open(TO_MONITOR, O_WRONLY, 0666);
 
-    if (fifo[READ] == -1){
+    if (fifo[READ] == -1 || cycle == -1){
 
         perror("open fifo");
         _exit(1);
