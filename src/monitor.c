@@ -105,6 +105,8 @@ int main(int argc, char **argv){
                 fflush(stdout);
                 break;
         }
+
+        waitpid(-1,NULL,WNOHANG);
     }
 
     free_list(list);
