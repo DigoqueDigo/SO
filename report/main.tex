@@ -109,7 +109,7 @@
 
         Nesta conceção de canais separados, um cliente é responsável por criar o FIFO que mais tarde o servidor deverá utilizar para encaminhar as mensagens destinadas a esse mesmo cliente, pelo que nunca haverá qualquer interferência entre clientes.
 
-        Após o comunicação terminar, o FIFO deixa de ser necessário e como tal também cabe ao cliente assegurar que o mesmo é eliminado, garantindo que outros clientes terão espaço para criar os seus FIFOs.
+        Após a comunicação terminar, o FIFO deixa de ser necessário e como tal também cabe ao cliente assegurar que o mesmo é eliminado, garantindo que outros clientes terão espaço para criar os seus FIFOs.
 
 
     \section{Protocolo}
@@ -125,7 +125,7 @@
             \end{center}
         \end{wrapfigure}
 
-        Este pacote é a única estrutura de dados transmitida, assim tanto os clientes como o servidor vão sempre estar à espera um tamanho fixo de \textit{bytes}.
+        Este pacote é a única estrutura de dados transmitida, assim tanto os clientes como o servidor vão sempre estar à espera de um tamanho fixo de \textit{bytes}.
 
         Por exemplo, caso seja necessário transmitir um inteiro que represente o tempo de execução de um programa, esse inteiro terá de ser inserido num pacote (no campo \textit{timestamp}), já que as leituras e escritas estão programadas para $X$ \textit{bytes} (tamanho do pacote).
 
@@ -193,7 +193,7 @@
             \item O cliente cria um FIFO ao qual atribui um nome que corresponde ao seu \textit{pid.}
             \item É criado um pacote com informações de estado e enviado pelo FIFO estático.
             \item O servidor recebe o pacote e obtém o \textit{pid} presente no mesmo.
-            \item O FIFO é aberto pelo servidor que por sua vez envia uma cópia dos pacotes presentes na lista de pacotes.
+            \item O FIFO é aberto pelo servidor que por sua vez envia uma cópia dos pacotes presentes na lista.
             \item À medida que o cliente recebe os pacotes, imprime no \textit{standard output} parte da informação contida nos mesmos.
             \item Assim que o cliente lê um EOF, o descritor de leitura é fechado e o FIFO é eliminado.
         \end{enumerate}
@@ -227,7 +227,7 @@
 
 \chapter{Conclusão}
 
-    Durante a realização deste trabalho prático enfrentámos vários desafios que nos obrigaram a pensar e refletir qual seria a melhor estratégia a adotar. Nunca vimos estas dificuldades como algo maçador, muito pelo contrário, procurámos sempre dar o nosso e seguir em frente a fim de apresentar um projeto do qual nos pudéssemos orgulhar.
+    Durante a realização deste trabalho prático enfrentámos vários desafios que nos obrigaram a pensar e refletir qual seria a melhor estratégia a adotar. Nunca vimos estas dificuldades como algo maçador, muito pelo contrário, procurámos sempre dar o nosso melhor e seguir em frente a fim de apresentar um projeto do qual nos pudéssemos orgulhar.
 
     Desta forma, acreditamos que cumprimos com o nosso objetivo, para além de termos implementado devidamente as funcionalidades básicas, as funcionalidades avançadas também apresentam o comportamento esperado.
 
