@@ -32,7 +32,7 @@ OK_STRING := "[OK]"
 
 TARGET_MONITOR := monitor
 TARGET_TRACER := tracer
-TARGET_ZIP := grupo-xx.zip
+TARGET_ZIP := 19.zip
 
 # BUILDING
 
@@ -73,8 +73,8 @@ $(OBJS_HANDLE): $(OBJS_HANDLE_DIR)/%.o : src/handle/%.c
 zip:
 	@mkdir -p 19
 	@cp -r Makefile src/ include/ report/ *.pdf 19/
-	zip -rv 19.zip 19/
-	unzip -tv 19.zip
+	zip -rv $(TARGET_ZIP) 19/
+	unzip -tv $(TARGET_ZIP)
 	@rm -r 19/
 
 # CLEAN
